@@ -39,17 +39,21 @@ Step 3 takes the parquet file from step 2 and processes it by performing several
 - It then iterates through each block, and selects the event with the highest wsel for each cell id. Keeping track of the wsel value and the event id.
 
 ![In this example, Block 5 has 10 events, and event 41 is the highest for cell 14205, so that event id and value would be selected for cell 14205](wsel_per_event.png)
+
 *In this example, Block 5 has 10 events, and event 41 is the highest for cell 14205, so that event id and value would be selected for cell 14205.*
 
 - That process is repeated for all 500 blocks, storing the highest wsel values and associated events in dataframes.
 - Once the highest events for each block have been selected, the dataframes are sorted from lowest to highest wsel values, where the event ids move with their associated value.
 
 ![The result is a dataframe containing sorted 500 WSEL values for each cell id illustrated here using cell 14205](sorted_max_wsel.png)
+
 *The result is a dataframe containing sorted 500 WSEL values for each cell id illustrated here using cell 14205.*
 
 - A second dataframe is created containing the event id associated with each value, both are saved as parquets.
 
 ![With the new parquets, several types of analysis can be done including calculating depths by subtracting the max WSEL values from minimum water surface from each cell and calculating recurrence intervals.](recurrence_int_one_real.png)
+
 *With the new parquets, several types of analysis can be done including calculating depths by subtracting the max WSEL values from minimum water surface from each cell and calculating recurrence intervals.*
 ![This can also be done for all realizations at a given cell to illustrate uncertainty, especially as the recurrence interval increases.](recurrence_int_all_reals.png)
+
 *This can also be done for all realizations at a given cell to illustrate uncertainty, especially as the recurrence interval increases.*
