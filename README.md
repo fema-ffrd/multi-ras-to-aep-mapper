@@ -6,15 +6,16 @@ Scripts for generating frequency grids from multiple HEC-RAS simulations.
 #### Scripts
 
 - get_file_list.py - Searches for S3 objects with a given prefix in a specified bucket and adds them as a list to a text file. For monte carlo analyses, there
-may be many millions of files. This script should be run one time and the output used for downstream processing.
+may be many millions of files. This script should be run one time and the output used for downstream processing. The example output is "ElkMiddle-plan_files.txt" which contains locations of all ElkMiddle plan files for each event.
 
 - compile_plan_data.py - Compiles water surface elevation data from plan files located on s3. It reads the list of plan file keys
-generated from get_file_list.py, divides them into batches, processes each batch, and concatenates the results into a single summary
-dataframe which is then saved to a parquet file.
+generated from get_file_list.py (Ex. ElkMiddle-plan_files.txt), divides them into batches, processes each batch, and concatenates the results into a single summary
+dataframe which is then saved to a parquet file. The result is a large parquet file with data for all events as the columns and cell ids as the rows for a model.
+Example output is "ElkMiddleMaxDepth.parquet"
 
 - get_block_max_data.py - Processes water surface elevation data to find the highest values from each block and corresponding events
-for each cell. Uses dask dataframe for efficiency, reads data from parquet file generated from compile_plan_data.py, gets block and event data
-from the provided blockfile, and outputs the results into parquet files.
+for each cell. Uses dask dataframe for efficiency, reads data from parquet file generated from compile_plan_data.py (Ex. ElkMiddleMaxDepth.parquet), gets block and event data
+from the provided blockfile, and outputs the results into parquet files. Example outputs are "elkmiddle_r5_values.parquet" and "elkmiddle_r5_events.parquet" where the values parquet contrains the max water surface elevation for each cell id for each block, and the events parquet contains the event id associated with each max value from the values parquet.
 
 - example_plots.py - Creates example plots from the data provided from the scripts.
 
